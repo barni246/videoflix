@@ -40,8 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'content.apps.ContentConfig',
     'debug_toolbar',
-    "django_rq",
+    'django_rq',
+    'django.contrib.postgres',
+    
 ]
+
+
 
 
 RQ_QUEUES = {
@@ -49,11 +53,12 @@ RQ_QUEUES = {
         'HOST': 'localhost',
         'PORT': 6379,
         'DB': 0,
-        # 'PASSWORD': 'foobared',
+        'PASSWORD': 'foobared',
         'DEFAULT_TIMEOUT': 360,
         
+    },
     }
-    }
+
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -97,10 +102,24 @@ WSGI_APPLICATION = 'videoflix.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.sqlite3',
+#          'NAME': BASE_DIR / 'db.sqlite3',
+#      }
+#  }
+
+
+# psql -U postgres
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'netflixdb',
+        'USER': 'netflixuser',
+        'PASSWORD': 'netflixpassword',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
