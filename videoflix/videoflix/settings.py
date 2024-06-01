@@ -172,11 +172,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIR = [
-    BASE_DIR / "static",
+STATICFILES_DIRS = [
+    BASE_DIR / "videoflix/static",
 ]
+
+STATIC_ROOT = BASE_DIR / 'videoflix/static/staticfiles'
+
+
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+

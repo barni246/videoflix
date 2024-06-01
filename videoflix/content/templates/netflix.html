@@ -1,0 +1,103 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video List</title>
+    {% load static %}
+    <link href="{% static 'video-js.css' %}" rel="stylesheet">
+    <link href="{% static 'video-js.min.css' %}" rel="stylesheet">
+    <script src="{% static 'video.js' %}"></script>
+    <script src="{% static 'video.min.js' %}"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .main-video {
+            flex: 0 0 50%; /* Take half the height */
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px; /* Space between main video and others */
+        }
+
+        .main-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the video covers the area */
+        }
+
+        .video-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between video items */
+            list-style-type: none; /* Remove default list styles */
+            padding: 0; /* Remove default padding */
+            margin: 0;
+            flex: 1 0 auto; /* Remaining space for the video list */
+            overflow-y: auto; /* Allow scrolling if there are many videos */
+        }
+
+        .video-item {
+            flex: 1 1 calc(33.333% - 20px); 
+            box-sizing: border-box;
+        }
+
+        .video-item video {
+            width: 100%;
+            height: auto;
+        }
+
+        .video-item a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .video-item {
+                flex: 1 1 calc(50% - 20px); /* Two columns on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-item {
+                flex: 1 1 100%; /* Single column on very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-video">
+            <h2>{{ videos.0.title }}</h2>
+            <video width="320" height="240" controls poster="{{ videos.0.thumbnail.url }}">
+                <source src="{{ videos.0.video_file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <ul class="video-list">
+            {% for video in videos|slice:"1:" %}
+            <li class="video-item">
+                <a href="{% url 'stream' video.pk %}">{{ video.title }}</a>
+                <video width="320" height="240" controls poster="{{ video.thumbnail.url }}">
+                    <source src="{{ video.video_file.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
